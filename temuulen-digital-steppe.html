@@ -1,0 +1,1687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Temuulen Tuvshinbold</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════════
+   TOKENS & RESET
+═══════════════════════════════════════════ */
+:root {
+  --navy:        #001A33;
+  --navy-mid:    #002244;
+  --navy-light:  #003366;
+  --pearl:       #FDFDFD;
+  --pearl-warm:  #F7F4EE;
+  --pearl-dim:   #EAE6DC;
+  --gold:        #C5A059;
+  --gold-light:  #D4B87A;
+  --gold-pale:   rgba(197,160,89,0.12);
+  --gold-line:   rgba(197,160,89,0.35);
+  --ink:         #1A1A2E;
+  --mist:        #8A9BAF;
+
+  --serif:       'Playfair Display', Georgia, serif;
+  --serif-body:  'Cormorant Garamond', Georgia, serif;
+  --sans:        'DM Sans', sans-serif;
+
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.83, 0, 0.17, 1);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  background: var(--pearl);
+  color: var(--navy);
+  font-family: var(--sans);
+  font-weight: 300;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { display: block; max-width: 100%; }
+a { text-decoration: none; color: inherit; }
+
+/* ═══════════════════════════════════════════
+   NOISE TEXTURE OVERLAY
+═══════════════════════════════════════════ */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.5;
+}
+
+/* ═══════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════ */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 500;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 5vw;
+  transition: background 0.5s var(--ease-out), padding 0.4s var(--ease-out);
+}
+nav.scrolled {
+  background: rgba(0,26,51,0.97);
+  backdrop-filter: blur(20px);
+  padding: 1.2rem 5vw;
+  border-bottom: 1px solid var(--gold-line);
+}
+.nav-monogram {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--pearl);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+.nav-monogram em {
+  font-style: normal;
+  color: var(--gold);
+}
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 3rem;
+}
+.nav-links a {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: rgba(253,253,253,0.65);
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  transition: color 0.25s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0;
+  width: 0; height: 1px;
+  background: var(--gold);
+  transition: width 0.3s var(--ease-out);
+}
+.nav-links a:hover { color: var(--pearl); }
+.nav-links a:hover::after { width: 100%; }
+
+/* ═══════════════════════════════════════════
+   SECTION I — THE HORIZON (HERO)
+═══════════════════════════════════════════ */
+#horizon {
+  position: relative;
+  height: 100vh;
+  min-height: 700px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+/* Ger landscape — generated via SVG (no external dependency) */
+.hero-landscape {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-landscape svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,26,51,0.15) 0%,
+    rgba(0,26,51,0.25) 40%,
+    rgba(0,26,51,0.75) 80%,
+    rgba(0,26,51,0.97) 100%
+  );
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: 0 5vw 8vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: end;
+  gap: 4rem;
+}
+
+.hero-left {}
+
+.hero-eyebrow {
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: riseIn 1s var(--ease-out) 0.4s forwards;
+}
+
+.hero-name {
+  font-family: var(--serif);
+  font-size: clamp(3rem, 6.5vw, 6rem);
+  font-weight: 500;
+  color: var(--pearl);
+  line-height: 1.0;
+  letter-spacing: -1px;
+  margin-bottom: 0.3rem;
+  opacity: 0;
+  animation: riseIn 1.1s var(--ease-out) 0.6s forwards;
+}
+.hero-name span {
+  display: block;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.hero-rule {
+  width: 60px;
+  height: 1px;
+  background: var(--gold);
+  margin: 2rem 0;
+  opacity: 0;
+  animation: expandRule 1s var(--ease-out) 1s forwards;
+}
+
+.hero-title {
+  font-family: var(--serif-body);
+  font-size: 1.15rem;
+  font-weight: 300;
+  color: rgba(253,253,253,0.75);
+  line-height: 1.6;
+  max-width: 480px;
+  opacity: 0;
+  animation: riseIn 1s var(--ease-out) 1.1s forwards;
+}
+
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2.5rem;
+  opacity: 0;
+  animation: riseIn 1.2s var(--ease-out) 1.3s forwards;
+}
+
+.hero-credentials {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.6rem;
+}
+.hero-cred-item {
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(253,253,253,0.5);
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.hero-cred-item::before {
+  content: '';
+  width: 20px; height: 1px;
+  background: var(--gold);
+  opacity: 0.6;
+}
+
+.hero-scroll {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  color: rgba(253,253,253,0.4);
+  font-family: var(--sans);
+  font-size: 0.55rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+.scroll-bar {
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: scrollPulse 2.5s ease infinite;
+}
+
+/* ═══════════════════════════════════════════
+   SECTION II — THE STORY (MANIFESTO)
+═══════════════════════════════════════════ */
+#story {
+  background: var(--pearl-warm);
+  padding: 10rem 5vw;
+}
+
+.story-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1.8fr;
+  gap: 8rem;
+  align-items: start;
+}
+
+.story-left {
+  position: sticky;
+  top: 10rem;
+}
+
+.section-label {
+  font-family: var(--sans);
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+}
+
+.section-heading {
+  font-family: var(--serif);
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  font-weight: 500;
+  color: var(--navy);
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+  margin-bottom: 2rem;
+}
+.section-heading em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.gold-rule {
+  width: 40px;
+  height: 2px;
+  background: var(--gold);
+  margin-bottom: 2rem;
+}
+
+.story-right {}
+
+.story-chapter {
+  margin-bottom: 4rem;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+}
+.story-chapter.visible { opacity: 1; transform: translateY(0); }
+
+.chapter-num {
+  font-family: var(--serif);
+  font-size: 0.75rem;
+  font-style: italic;
+  color: var(--gold);
+  letter-spacing: 1px;
+  margin-bottom: 0.8rem;
+}
+
+.chapter-title {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--navy);
+  margin-bottom: 1.2rem;
+}
+
+.chapter-body {
+  font-family: var(--serif-body);
+  font-size: 1.15rem;
+  font-weight: 300;
+  color: #3A4A5E;
+  line-height: 1.9;
+}
+.chapter-body strong {
+  font-weight: 500;
+  color: var(--navy);
+}
+
+.chapter-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--pearl-dim);
+  margin: 4rem 0;
+}
+
+/* Pull quote */
+.pull-quote {
+  border-left: 2px solid var(--gold);
+  padding: 1.5rem 2.5rem;
+  margin: 3rem 0;
+  background: rgba(197,160,89,0.05);
+}
+.pull-quote p {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--navy);
+  line-height: 1.6;
+}
+.pull-quote cite {
+  display: block;
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  font-style: normal;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-top: 1rem;
+}
+
+/* ═══════════════════════════════════════════
+   SECTION III — COMMAND (MILITARY / ATHLETICS)
+═══════════════════════════════════════════ */
+#command {
+  background: var(--navy);
+  padding: 10rem 5vw;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle geometric pattern */
+#command::before {
+  content: '';
+  position: absolute;
+  top: -200px; right: -200px;
+  width: 600px; height: 600px;
+  border: 1px solid rgba(197,160,89,0.08);
+  border-radius: 50%;
+  pointer-events: none;
+}
+#command::after {
+  content: '';
+  position: absolute;
+  top: -300px; right: -300px;
+  width: 800px; height: 800px;
+  border: 1px solid rgba(197,160,89,0.04);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.command-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.command-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 6rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid rgba(197,160,89,0.2);
+}
+
+.command-title-block .section-label { color: var(--gold); }
+.command-title-block .section-heading { color: var(--pearl); }
+
+.command-header-quote {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--mist);
+  max-width: 320px;
+  line-height: 1.7;
+  text-align: right;
+}
+
+/* Stat row */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: rgba(197,160,89,0.15);
+  margin-bottom: 6rem;
+}
+
+.stat-cell {
+  background: var(--navy);
+  padding: 3rem 2.5rem;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+}
+.stat-cell.visible { opacity: 1; transform: translateY(0); }
+.stat-cell:hover { background: var(--navy-mid); }
+
+.stat-cell::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 0; height: 2px;
+  background: var(--gold);
+  transition: width 0.4s var(--ease-out);
+}
+.stat-cell:hover::before { width: 100%; }
+
+.stat-number {
+  font-family: var(--serif);
+  font-size: 3.5rem;
+  font-weight: 500;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 0.8rem;
+}
+.stat-label {
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--mist);
+  margin-bottom: 0.5rem;
+}
+.stat-sub {
+  font-family: var(--serif-body);
+  font-size: 0.9rem;
+  color: rgba(253,253,253,0.4);
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* Command cards */
+.command-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+
+.command-card {
+  border: 1px solid rgba(197,160,89,0.15);
+  padding: 3.5rem;
+  position: relative;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out), border-color 0.3s;
+}
+.command-card.visible { opacity: 1; transform: translateY(0); }
+.command-card:hover { border-color: rgba(197,160,89,0.4); }
+
+.command-card-icon {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+.command-card-label {
+  font-family: var(--sans);
+  font-size: 0.6rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.8rem;
+}
+.command-card-title {
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: var(--pearl);
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+.command-card-body {
+  font-family: var(--serif-body);
+  font-size: 1.05rem;
+  font-weight: 300;
+  color: var(--mist);
+  line-height: 1.85;
+}
+.command-card-body strong {
+  color: var(--pearl);
+  font-weight: 400;
+}
+
+/* Oath block */
+.oath-block {
+  margin-top: 6rem;
+  padding: 4rem 5rem;
+  border: 1px solid rgba(197,160,89,0.2);
+  background: rgba(197,160,89,0.03);
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 4rem;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+}
+.oath-block.visible { opacity: 1; transform: translateY(0); }
+
+.oath-left .section-label { color: var(--gold); }
+.oath-left-date {
+  font-family: var(--serif);
+  font-size: 2.5rem;
+  font-style: italic;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+.oath-left-year {
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--mist);
+}
+.oath-right p {
+  font-family: var(--serif-body);
+  font-size: 1.2rem;
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(253,253,253,0.7);
+  line-height: 1.9;
+}
+.oath-right p strong {
+  font-style: normal;
+  font-weight: 400;
+  color: var(--pearl);
+}
+
+/* ═══════════════════════════════════════════
+   SECTION IV — PROTOCOL (CIPHERSTREAM)
+═══════════════════════════════════════════ */
+#protocol {
+  background: var(--pearl-warm);
+  padding: 10rem 5vw;
+}
+
+.protocol-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.protocol-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  margin-bottom: 7rem;
+  align-items: end;
+}
+
+.protocol-desc {
+  font-family: var(--serif-body);
+  font-size: 1.15rem;
+  font-weight: 300;
+  color: #3A4A5E;
+  line-height: 1.9;
+}
+
+/* Terminal */
+.terminal-frame {
+  background: #0D1117;
+  border: 1px solid rgba(197,160,89,0.2);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.18);
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+  margin-bottom: 5rem;
+}
+.terminal-frame.visible { opacity: 1; transform: translateY(0); }
+
+.term-bar {
+  background: #161B22;
+  padding: 0.9rem 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid #30363D;
+}
+.tc { width: 11px; height: 11px; border-radius: 50%; }
+.tc-r { background: #FF5F57; }
+.tc-y { background: #FEBC2E; }
+.tc-g { background: #28C840; }
+.term-file {
+  flex: 1;
+  text-align: center;
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  letter-spacing: 1px;
+  color: #7D8590;
+}
+.term-body {
+  padding: 2.5rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.8rem;
+  line-height: 2;
+  color: #E6EDF3;
+}
+.tc-dim { color: #7D8590; }
+.tc-gold { color: #E3B341; }
+.tc-green { color: #3FB950; }
+.tc-blue { color: #79C0FF; }
+.tc-purple { color: #D2A8FF; }
+.tc-red { color: #F85149; }
+.tc-cyan { color: #A5D6FF; }
+.term-cursor {
+  display: inline-block;
+  width: 7px; height: 13px;
+  background: #C5A059;
+  animation: blink 1s step-end infinite;
+  vertical-align: middle;
+  margin-left: 2px;
+}
+
+/* Protocol feature grid */
+.protocol-features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--pearl-dim);
+  margin-bottom: 5rem;
+}
+
+.proto-feat {
+  background: var(--pearl-warm);
+  padding: 3rem 2.5rem;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+}
+.proto-feat.visible { opacity: 1; transform: translateY(0); }
+.proto-feat:hover { background: var(--pearl); }
+
+.proto-feat-num {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--gold);
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+}
+.proto-feat-title {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--navy);
+  margin-bottom: 0.8rem;
+}
+.proto-feat-body {
+  font-family: var(--serif-body);
+  font-size: 0.95rem;
+  color: #3A4A5E;
+  line-height: 1.75;
+}
+
+/* Version badge */
+.version-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  border: 1px solid var(--gold-line);
+  padding: 0.7rem 1.5rem;
+  margin-bottom: 3rem;
+}
+.version-badge-label {
+  font-family: var(--sans);
+  font-size: 0.6rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.version-badge-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  animation: pulseDot 2s ease infinite;
+}
+
+/* ═══════════════════════════════════════════
+   SECTION V — VISION 2040
+═══════════════════════════════════════════ */
+#vision {
+  background: var(--navy);
+  padding: 12rem 5vw;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Gold diagonal accent */
+.vision-diagonal {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, rgba(197,160,89,0.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.vision-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.vision-top {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8rem;
+  margin-bottom: 8rem;
+  align-items: start;
+}
+
+.vision-manifesto {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--pearl);
+  line-height: 1.6;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+}
+.vision-manifesto.visible { opacity: 1; transform: translateY(0); }
+.vision-manifesto strong {
+  font-style: normal;
+  font-weight: 500;
+  color: var(--gold);
+}
+
+.vision-pillars {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.vision-pillar {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  padding: 2.5rem 0;
+  border-bottom: 1px solid rgba(197,160,89,0.12);
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+}
+.vision-pillar:first-child { border-top: 1px solid rgba(197,160,89,0.12); }
+.vision-pillar.visible { opacity: 1; transform: translateX(0); }
+
+.pillar-num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.5rem;
+  color: var(--gold);
+  opacity: 0.5;
+  min-width: 2.5rem;
+  padding-top: 2px;
+}
+.pillar-content {}
+.pillar-title {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--pearl);
+  margin-bottom: 0.4rem;
+}
+.pillar-desc {
+  font-family: var(--serif-body);
+  font-size: 0.95rem;
+  color: var(--mist);
+  line-height: 1.7;
+}
+
+/* Timeline */
+.vision-timeline {
+  border-top: 1px solid rgba(197,160,89,0.15);
+  padding-top: 6rem;
+}
+
+.timeline-heading {
+  font-family: var(--sans);
+  font-size: 0.6rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 4rem;
+}
+
+.timeline-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  position: relative;
+}
+
+.timeline-row::before {
+  content: '';
+  position: absolute;
+  top: 20px; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(to right, var(--gold), rgba(197,160,89,0.2));
+}
+
+.timeline-node {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: 3rem;
+  position: relative;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+}
+.timeline-node.visible { opacity: 1; transform: translateY(0); }
+
+.node-dot {
+  position: absolute;
+  top: 14px; left: 0;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--navy-mid);
+  border: 2px solid var(--gold);
+  transition: background 0.3s;
+}
+.timeline-node:hover .node-dot { background: var(--gold); }
+
+.node-year {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+.node-title {
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--pearl);
+  margin-bottom: 0.6rem;
+  line-height: 1.5;
+}
+.node-desc {
+  font-family: var(--serif-body);
+  font-size: 0.85rem;
+  color: var(--mist);
+  line-height: 1.7;
+  padding-right: 1.5rem;
+}
+
+/* CTA */
+.vision-cta {
+  margin-top: 8rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 4rem;
+  border-top: 1px solid rgba(197,160,89,0.15);
+}
+
+.cta-phrase {
+  font-family: var(--serif);
+  font-size: 1.8rem;
+  font-style: italic;
+  color: var(--pearl);
+  font-weight: 400;
+}
+
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--navy);
+  background: var(--gold);
+  padding: 1.1rem 2.5rem;
+  transition: background 0.3s, color 0.3s, transform 0.2s;
+}
+.btn-gold:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+}
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--pearl);
+  border: 1px solid rgba(197,160,89,0.4);
+  padding: 1.1rem 2.5rem;
+  transition: border-color 0.3s, background 0.3s;
+  margin-left: 1rem;
+}
+.btn-ghost:hover {
+  border-color: var(--gold);
+  background: rgba(197,160,89,0.06);
+}
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+footer {
+  background: var(--navy);
+  padding: 3rem 5vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(197,160,89,0.12);
+}
+
+.footer-mono {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--gold);
+}
+.footer-copy {
+  font-family: var(--sans);
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--mist);
+}
+.footer-tagline {
+  font-family: var(--serif-body);
+  font-size: 0.85rem;
+  font-style: italic;
+  color: rgba(253,253,253,0.3);
+}
+
+/* ═══════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════ */
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes expandRule {
+  from { width: 0; opacity: 0; }
+  to { width: 60px; opacity: 1; }
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 1; transform: scaleY(1); transform-origin: top; }
+  50% { opacity: 0.3; transform: scaleY(0.5); transform-origin: top; }
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.7); }
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .hero-content { grid-template-columns: 1fr; }
+  .hero-right { align-items: flex-start; }
+  .story-inner { grid-template-columns: 1fr; gap: 4rem; }
+  .story-left { position: static; }
+  .stat-row { grid-template-columns: 1fr 1fr; }
+  .command-grid { grid-template-columns: 1fr; }
+  .protocol-header { grid-template-columns: 1fr; gap: 3rem; }
+  .protocol-features { grid-template-columns: 1fr 1fr; }
+  .vision-top { grid-template-columns: 1fr; gap: 4rem; }
+  .timeline-row { grid-template-columns: 1fr 1fr; gap: 3rem; }
+  .timeline-row::before { display: none; }
+  .timeline-node { padding-top: 0; }
+  .node-dot { display: none; }
+  .vision-cta { flex-direction: column; gap: 2rem; align-items: flex-start; }
+  .oath-block { grid-template-columns: 1fr; gap: 2rem; }
+  .nav-links { display: none; }
+}
+
+@media (max-width: 640px) {
+  .stat-row { grid-template-columns: 1fr; }
+  .protocol-features { grid-template-columns: 1fr; }
+  .timeline-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════ NAV ═══════ -->
+<nav id="navbar">
+  <div class="nav-monogram">T<em>.</em>T</div>
+  <ul class="nav-links">
+    <li><a href="#horizon">The Horizon</a></li>
+    <li><a href="#story">The Story</a></li>
+    <li><a href="#command">Command</a></li>
+    <li><a href="#protocol">Protocol</a></li>
+    <li><a href="#vision">2040</a></li>
+  </ul>
+</nav>
+
+<!-- ═══════ I. THE HORIZON (HERO) ═══════ -->
+<section id="horizon">
+  <div class="hero-landscape">
+    <!-- Mongolian Steppe & Ger — rendered as a high-fidelity SVG illustration -->
+    <svg viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#4A90D9"/>
+          <stop offset="35%" stop-color="#6EB5E8"/>
+          <stop offset="70%" stop-color="#A8D4F0"/>
+          <stop offset="100%" stop-color="#C8E8F5"/>
+        </linearGradient>
+        <linearGradient id="steppeGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#8DB87A"/>
+          <stop offset="40%" stop-color="#6A9957"/>
+          <stop offset="100%" stop-color="#4A7040"/>
+        </linearGradient>
+        <linearGradient id="hillGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#5A8A50"/>
+          <stop offset="100%" stop-color="#3D6633"/>
+        </linearGradient>
+        <radialGradient id="sunGlow" cx="50%" cy="30%" r="40%">
+          <stop offset="0%" stop-color="rgba(255,230,150,0.25)"/>
+          <stop offset="100%" stop-color="rgba(255,200,80,0)"/>
+        </radialGradient>
+        <filter id="cloudBlur"><feGaussianBlur stdDeviation="3"/></filter>
+        <filter id="softBlur"><feGaussianBlur stdDeviation="1.5"/></filter>
+        <linearGradient id="gerWhite" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#F5F0E8"/>
+          <stop offset="100%" stop-color="#DDD8CC"/>
+        </linearGradient>
+        <linearGradient id="gerShadow" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="rgba(0,0,0,0.12)"/>
+          <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+        </linearGradient>
+        <linearGradient id="distHill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#7BAAD0" stop-opacity="0.6"/>
+          <stop offset="100%" stop-color="#5A8AAF" stop-opacity="0.3"/>
+        </linearGradient>
+        <linearGradient id="flagRed" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#C0392B"/>
+          <stop offset="100%" stop-color="#E74C3C"/>
+        </linearGradient>
+      </defs>
+
+      <!-- SKY -->
+      <rect width="1600" height="900" fill="url(#skyGrad)"/>
+
+      <!-- Sun glow -->
+      <ellipse cx="1100" cy="200" rx="300" ry="260" fill="url(#sunGlow)"/>
+
+      <!-- Clouds - back layer -->
+      <g filter="url(#cloudBlur)" opacity="0.8">
+        <ellipse cx="200" cy="130" rx="120" ry="35" fill="white" opacity="0.7"/>
+        <ellipse cx="240" cy="120" rx="80" ry="28" fill="white" opacity="0.8"/>
+        <ellipse cx="160" cy="125" rx="60" ry="22" fill="white" opacity="0.7"/>
+
+        <ellipse cx="800" cy="90" rx="150" ry="40" fill="white" opacity="0.65"/>
+        <ellipse cx="850" cy="78" rx="100" ry="30" fill="white" opacity="0.7"/>
+        <ellipse cx="740" cy="85" rx="80" ry="26" fill="white" opacity="0.6"/>
+
+        <ellipse cx="1350" cy="150" rx="130" ry="38" fill="white" opacity="0.6"/>
+        <ellipse cx="1400" cy="138" rx="90" ry="28" fill="white" opacity="0.65"/>
+      </g>
+
+      <!-- Distant mountains -->
+      <g opacity="0.55">
+        <path d="M0 520 Q200 380 400 440 Q600 380 800 420 Q1000 360 1200 400 Q1400 350 1600 390 L1600 560 L0 560Z" fill="url(#distHill)"/>
+      </g>
+
+      <!-- Rolling hills mid -->
+      <path d="M0 620 Q300 520 600 570 Q900 510 1200 560 Q1400 530 1600 550 L1600 900 L0 900Z" fill="url(#hillGrad)"/>
+
+      <!-- Main steppe ground -->
+      <path d="M0 660 Q400 620 800 640 Q1200 615 1600 630 L1600 900 L0 900Z" fill="url(#steppeGrad)"/>
+
+      <!-- Grass texture lines -->
+      <g opacity="0.3" stroke="#4A7040" stroke-width="1">
+        <line x1="80" y1="700" x2="85" y2="690"/>
+        <line x1="88" y1="695" x2="91" y2="688"/>
+        <line x1="150" y1="720" x2="153" y2="710"/>
+        <line x1="160" y1="715" x2="164" y2="706"/>
+        <line x1="250" y1="710" x2="253" y2="701"/>
+        <line x1="320" y1="705" x2="324" y2="696"/>
+        <line x1="400" y1="700" x2="404" y2="691"/>
+        <line x1="480" y1="715" x2="483" y2="706"/>
+        <line x1="550" y1="695" x2="554" y2="686"/>
+        <line x1="1100" y1="690" x2="1104" y2="681"/>
+        <line x1="1200" y1="710" x2="1203" y2="701"/>
+        <line x1="1350" y1="700" x2="1354" y2="691"/>
+        <line x1="1450" y1="720" x2="1453" y2="711"/>
+      </g>
+
+      <!-- ═══ MAIN GER (Center-Left) ═══ -->
+      <g transform="translate(550, 500)">
+        <!-- Shadow on ground -->
+        <ellipse cx="100" cy="195" rx="130" ry="18" fill="rgba(0,0,0,0.15)" filter="url(#softBlur)"/>
+
+        <!-- Ger base / khana walls -->
+        <path d="M-10 170 Q100 155 210 170 L220 188 Q100 175 -20 188 Z" fill="url(#gerWhite)"/>
+        <!-- Wall shadow -->
+        <path d="M-10 170 L-20 188 Q20 185 -10 175 Z" fill="url(#gerShadow)"/>
+
+        <!-- Ger roof (toono area) -->
+        <path d="M-10 170 Q100 95 210 170 Z" fill="#EDE8DC"/>
+        <!-- Roof shadow right -->
+        <path d="M140 130 Q170 145 210 170 L150 138 Z" fill="rgba(0,0,0,0.08)"/>
+        <!-- Roof lines (uni - roof poles) -->
+        <g stroke="#C8C0B0" stroke-width="1.2" opacity="0.7">
+          <line x1="100" y1="100" x2="30" y2="170"/>
+          <line x1="100" y1="100" x2="60" y2="165"/>
+          <line x1="100" y1="100" x2="90" y2="157"/>
+          <line x1="100" y1="100" x2="120" y2="157"/>
+          <line x1="100" y1="100" x2="150" y2="163"/>
+          <line x1="100" y1="100" x2="175" y2="168"/>
+        </g>
+
+        <!-- Toono (crown ring) -->
+        <ellipse cx="100" cy="97" rx="28" ry="12" fill="none" stroke="#C8C0B0" stroke-width="2.5"/>
+        <ellipse cx="100" cy="97" rx="22" ry="8" fill="rgba(200,190,170,0.4)"/>
+        <!-- Toono spokes -->
+        <g stroke="#C8C0B0" stroke-width="1.5">
+          <line x1="72" y1="97" x2="128" y2="97"/>
+          <line x1="100" y1="85" x2="100" y2="109"/>
+          <line x1="80" y1="89" x2="120" y2="105"/>
+          <line x1="80" y1="105" x2="120" y2="89"/>
+        </g>
+
+        <!-- Decorative orange band at roof base -->
+        <path d="M-5 170 Q100 157 205 170 L205 175 Q100 163 -5 175 Z" fill="#E08020" opacity="0.85"/>
+
+        <!-- Door frame -->
+        <rect x="78" y="155" width="44" height="34" rx="1" fill="#2A1A0A"/>
+        <rect x="80" y="157" width="40" height="32" rx="1" fill="#C8B89A"/>
+        <!-- Door panels -->
+        <line x1="100" y1="157" x2="100" y2="189" stroke="#A89070" stroke-width="1"/>
+        <line x1="80" y1="173" x2="120" y2="173" stroke="#A89070" stroke-width="1"/>
+        <!-- Door knob -->
+        <circle cx="115" cy="173" r="3" fill="#8B6914"/>
+
+        <!-- Decorative blue band at base -->
+        <path d="M-10 183 Q100 172 210 183 L220 188 Q100 178 -20 188 Z" fill="#2A6098" opacity="0.6"/>
+
+        <!-- Smoke from toono -->
+        <g opacity="0.4">
+          <ellipse cx="100" cy="75" rx="8" ry="14" fill="white" filter="url(#cloudBlur)"/>
+          <ellipse cx="105" cy="52" rx="12" ry="16" fill="white" filter="url(#cloudBlur)"/>
+          <ellipse cx="98" cy="30" rx="9" ry="12" fill="white" filter="url(#cloudBlur)"/>
+        </g>
+      </g>
+
+      <!-- ═══ SMALLER GER (Background Right) ═══ -->
+      <g transform="translate(1050, 540) scale(0.55)">
+        <ellipse cx="100" cy="195" rx="130" ry="18" fill="rgba(0,0,0,0.1)" filter="url(#softBlur)"/>
+        <path d="M-10 170 Q100 155 210 170 L220 188 Q100 175 -20 188 Z" fill="#E8E0D4"/>
+        <path d="M-10 170 Q100 95 210 170 Z" fill="#DDD8CC"/>
+        <g stroke="#B8B0A0" stroke-width="1.5" opacity="0.6">
+          <line x1="100" y1="100" x2="40" y2="168"/>
+          <line x1="100" y1="100" x2="80" y2="160"/>
+          <line x1="100" y1="100" x2="120" y2="160"/>
+          <line x1="100" y1="100" x2="165" y2="167"/>
+        </g>
+        <ellipse cx="100" cy="98" rx="24" ry="10" fill="none" stroke="#B8B0A0" stroke-width="2"/>
+        <path d="M-5 170 Q100 157 205 170 L205 175 Q100 163 -5 175 Z" fill="#E08020" opacity="0.7"/>
+        <rect x="82" y="158" width="36" height="30" fill="#C8B89A"/>
+        <path d="M-10 183 Q100 172 210 183 L220 188 Q100 178 -20 188 Z" fill="#2A6098" opacity="0.5"/>
+      </g>
+
+      <!-- Mongolian flag pole -->
+      <g transform="translate(730, 490)">
+        <line x1="0" y1="0" x2="0" y2="215" stroke="#8B6914" stroke-width="2.5"/>
+        <!-- Flag -->
+        <rect x="0" y="0" width="60" height="38" fill="url(#flagRed)"/>
+        <rect x="0" y="0" width="16" height="38" fill="#003087"/>
+        <rect x="44" y="0" width="16" height="38" fill="#003087"/>
+        <!-- Soyombo symbol (simplified) -->
+        <g transform="translate(8, 8)" fill="#FFD700" opacity="0.9">
+          <circle cx="4" cy="2" r="2"/>
+          <rect x="1" y="5" width="6" height="1.5"/>
+          <rect x="1" y="7.5" width="6" height="1.5"/>
+          <path d="M4 10 L7 16 L1 16 Z"/>
+          <rect x="1" y="17" width="6" height="1.5"/>
+          <rect x="1" y="19.5" width="6" height="1.5"/>
+        </g>
+      </g>
+
+      <!-- Distant riders (tiny silhouettes) -->
+      <g fill="#1A1A1A" opacity="0.4">
+        <!-- Rider 1 -->
+        <ellipse cx="200" cy="636" rx="9" ry="5" />
+        <circle cx="200" cy="629" r="3.5"/>
+        <line x1="200" y1="625" x2="200" y2="631" stroke="#1A1A1A" stroke-width="2"/>
+        <!-- Rider 2 -->
+        <ellipse cx="225" cy="634" rx="8" ry="4.5"/>
+        <circle cx="225" cy="627" r="3"/>
+        <line x1="225" y1="624" x2="225" y2="629" stroke="#1A1A1A" stroke-width="2"/>
+        <!-- Rider 3 -->
+        <ellipse cx="245" cy="638" rx="9" ry="5"/>
+        <circle cx="245" cy="631" r="3.5"/>
+        <line x1="245" y1="627" x2="245" y2="632" stroke="#1A1A1A" stroke-width="2"/>
+      </g>
+
+      <!-- Wildflowers -->
+      <g fill="#E8D44D" opacity="0.5">
+        <circle cx="480" cy="698" r="2.5"/>
+        <circle cx="490" cy="693" r="2"/>
+        <circle cx="472" cy="693" r="2"/>
+        <circle cx="485" cy="688" r="1.5"/>
+        <circle cx="1200" cy="682" r="2.5"/>
+        <circle cx="1210" cy="677" r="2"/>
+        <circle cx="1192" cy="677" r="2"/>
+      </g>
+      <g fill="#F4A020" opacity="0.4">
+        <circle cx="900" cy="695" r="2"/>
+        <circle cx="910" cy="690" r="1.5"/>
+        <circle cx="892" cy="690" r="1.5"/>
+      </g>
+    </svg>
+  </div>
+  <div class="hero-gradient"></div>
+
+  <div class="hero-content">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Mongolia &nbsp;·&nbsp; InfoSec &nbsp;·&nbsp; Reform</p>
+      <h1 class="hero-name">
+        Temuulen
+        <span>Tuvshinbold</span>
+      </h1>
+      <div class="hero-rule"></div>
+      <p class="hero-title">
+        Scholar of statecraft. Warrior of the dojang.<br>
+        Architect of a secure, sovereign Mongolia.
+      </p>
+    </div>
+    <div class="hero-right">
+      <div class="hero-credentials">
+        <div class="hero-cred-item">GPA 4.0 &nbsp;·&nbsp; IELTS 7.0</div>
+        <div class="hero-cred-item">3× National Taekwondo Champion</div>
+        <div class="hero-cred-item">Junior Sergeant · Information Security</div>
+        <div class="hero-cred-item">CipherStream v6.0</div>
+      </div>
+      <div class="hero-scroll">
+        <div class="scroll-bar"></div>
+        <span>Scroll</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ II. THE STORY (MANIFESTO) ═══════ -->
+<section id="story">
+  <div class="story-inner">
+    <div class="story-left">
+      <p class="section-label">II &nbsp;—&nbsp; The Story</p>
+      <h2 class="section-heading">
+        A Mind<br>Forged on<br>the <em>Steppe.</em>
+      </h2>
+      <div class="gold-rule"></div>
+      <p style="font-family:var(--serif-body);font-size:1rem;color:#5A6A7E;line-height:1.8;font-style:italic;">
+        "The steppe teaches patience, endurance,<br>
+        and the vast consequences of small decisions."
+      </p>
+    </div>
+    <div class="story-right">
+      <div class="story-chapter" data-reveal>
+        <p class="chapter-num">Chapter I</p>
+        <h3 class="chapter-title">The Education of a Statesman</h3>
+        <p class="chapter-body">
+          Before the classroom, there was a grandfather. A man who had watched Mongolia transform — from empire's memory to socialist experiment to modern republic — and who understood that <strong>governance is not inherited; it is studied.</strong> Around that table, history was not a subject. It was a living argument about why nations rise and collapse.
+        </p>
+        <p class="chapter-body" style="margin-top:1rem;">
+          That foundation shaped everything that followed: the conviction that the quality of a nation's institutions is the most consequential variable in its people's lives, and that those institutions must be earned, designed, and protected — not assumed.
+        </p>
+      </div>
+
+      <div class="chapter-divider"></div>
+
+      <div class="story-chapter" data-reveal>
+        <p class="chapter-num">Chapter II</p>
+        <h3 class="chapter-title">The Discipline of the Dojang</h3>
+        <p class="chapter-body">
+          Three national championships are not a footnote. They are a philosophy. Taekwondo's discipline — the willingness to return to the mat after every defeat, to train the body into a tool for precision rather than force — translates directly to every other domain. <strong>The competitor who understands their own fear is harder to defeat than the one who merely suppresses it.</strong>
+        </p>
+        <p class="chapter-body" style="margin-top:1rem;">
+          A runner-up finish at the World Championships in Germany did not signal the end of a journey. It marked the beginning of a broader understanding: excellence in one arena is the proof of concept for excellence in all others.
+        </p>
+      </div>
+
+      <div class="chapter-divider"></div>
+
+      <div class="story-chapter" data-reveal>
+        <div class="pull-quote">
+          <p>"The most powerful surveillance system a corrupt government fears is not a foreign intelligence service — it is its own citizens, armed with encryption."</p>
+          <cite>— Temuulen Tuvshinbold</cite>
+        </div>
+      </div>
+
+      <div class="story-chapter" data-reveal>
+        <p class="chapter-num">Chapter III</p>
+        <h3 class="chapter-title">The Architecture of Reform</h3>
+        <p class="chapter-body">
+          The leap from martial arts to information security is not the non-sequitur it appears to be. Both disciplines share a core insight: <strong>the best defense is structured, anticipatory, and built from first principles — not improvised under pressure.</strong>
+        </p>
+        <p class="chapter-body" style="margin-top:1rem;">
+          CipherStream did not emerge from a curriculum. It emerged from a question: what would it take for a Mongolian citizen — a journalist, an activist, a civic official — to communicate with mathematical certainty that their message had not been intercepted or altered? That question has a technical answer. Building it is the work.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ III. COMMAND (MILITARY / ATHLETICS) ═══════ -->
+<section id="command">
+  <div class="command-inner">
+    <div class="command-header">
+      <div class="command-title-block">
+        <p class="section-label">III &nbsp;—&nbsp; Command</p>
+        <h2 class="section-heading" style="color:var(--pearl);">
+          Forged in<br>Discipline &<br><em style="color:var(--gold);">Service.</em>
+        </h2>
+      </div>
+      <p class="command-header-quote">
+        "A nation's security depends not on the size of its arsenal,<br>
+        but on the quality of the minds sworn to protect it."
+      </p>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-cell" data-reveal>
+        <div class="stat-number">3×</div>
+        <div class="stat-label">National Champion</div>
+        <div class="stat-sub">Taekwondo · Mongolia</div>
+      </div>
+      <div class="stat-cell" data-reveal>
+        <div class="stat-number">4.0</div>
+        <div class="stat-label">Academic GPA</div>
+        <div class="stat-sub">Perfect score · All subjects</div>
+      </div>
+      <div class="stat-cell" data-reveal>
+        <div class="stat-number">7.0</div>
+        <div class="stat-label">IELTS Score</div>
+        <div class="stat-sub">Academic band · English</div>
+      </div>
+      <div class="stat-cell" data-reveal>
+        <div class="stat-number">5×</div>
+        <div class="stat-label">Best Student</div>
+        <div class="stat-sub">Annual recognition · Consecutive</div>
+      </div>
+    </div>
+
+    <div class="command-grid">
+      <div class="command-card" data-reveal>
+        <div class="command-card-icon">🥋</div>
+        <p class="command-card-label">Athletics</p>
+        <h3 class="command-card-title">The Martial Record</h3>
+        <p class="command-card-body">
+          <strong>Three consecutive national titles</strong> in Taekwondo require not talent, but a particular form of obsession — the willingness to treat every victory as a new beginning and every opponent as a teacher. The silver medal at the World Championship in Germany placed Temuulen among the finest competitors of his generation on a global stage.
+          <br><br>
+          The sport taught the most important lesson: <strong>composure under pressure is not a personality trait. It is a trained skill.</strong> It appears now in every negotiation, every presentation, every strategic decision made under constraint.
+        </p>
+      </div>
+
+      <div class="command-card" data-reveal>
+        <div class="command-card-icon">⚔️</div>
+        <p class="command-card-label">Military Service</p>
+        <h3 class="command-card-title">Junior Sergeant,<br>Information Security</h3>
+        <p class="command-card-body">
+          Military service is not a line on a résumé. It is an argument about character — a public declaration that one's commitments are binding, not contingent on convenience. <strong>The oath taken in August 2025</strong> was the formalization of a disposition that had always existed: that the security of the nation is a personal responsibility.
+          <br><br>
+          The specialization in information security was deliberate. <strong>The future battlefield is digital</strong> — and the officer who cannot defend a network is as exposed as one who cannot read a map.
+        </p>
+      </div>
+    </div>
+
+    <div class="oath-block" data-reveal>
+      <div class="oath-left">
+        <p class="section-label">The Oath</p>
+        <div class="oath-left-date">Aug</div>
+        <div class="oath-left-year">2025 &nbsp;·&nbsp; Active</div>
+      </div>
+      <div class="oath-right">
+        <p>
+          I take this oath not as the conclusion of a journey, but as its <strong>formal opening chapter</strong> — a commitment to defend Mongolia's sovereignty in every domain I am given the privilege to serve: in code, in competition, in counsel, and in governance. The work begins now. <strong>It does not end.</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ IV. PROTOCOL (CIPHERSTREAM) ═══════ -->
+<section id="protocol">
+  <div class="protocol-inner">
+    <div class="protocol-header">
+      <div>
+        <p class="section-label">IV &nbsp;—&nbsp; Protocol</p>
+        <h2 class="section-heading">
+          CipherStream<br><em>v6.0</em>
+        </h2>
+        <div class="gold-rule"></div>
+        <div class="version-badge">
+          <div class="version-badge-dot"></div>
+          <span class="version-badge-label">Version 6.0 &nbsp;·&nbsp; Active Development</span>
+        </div>
+      </div>
+      <div>
+        <p class="protocol-desc">
+          CipherStream is a secure cryptographic communication platform engineered for a single, non-negotiable purpose: to make private communication mathematically guaranteed, not merely assumed. Built on symmetric encryption and XOR logic, each architectural decision in v6.0 reflects a deliberate prioritization of security integrity over feature velocity.
+        </p>
+        <p class="protocol-desc" style="margin-top:1.5rem;">
+          The platform is not a proof of concept. It is a working tool — and the foundation of a broader argument: that digital sovereignty is a precondition for genuine political sovereignty, and that no reform agenda is credible without it.
+        </p>
+      </div>
+    </div>
+
+    <div class="terminal-frame" data-reveal>
+      <div class="term-bar">
+        <div class="tc tc-r"></div>
+        <div class="tc tc-y"></div>
+        <div class="tc tc-g"></div>
+        <span class="term-file">cipherstream_v6 / core / engine.py</span>
+      </div>
+      <div class="term-body">
+        <div><span class="tc-dim"># CipherStream v6.0 — Symmetric Encryption Core</span></div>
+        <div><span class="tc-dim"># Author: Temuulen Tuvshinbold &nbsp;·&nbsp; InfoSec Division</span></div>
+        <div><span class="tc-dim"># Architecture: Layered XOR + Key Derivation + Integrity Check</span></div>
+        <br>
+        <div><span class="tc-gold">import</span> <span class="tc-cyan">hashlib, secrets, struct</span></div>
+        <div><span class="tc-gold">from</span> <span class="tc-cyan">typing</span> <span class="tc-gold">import</span> <span class="tc-cyan">Tuple</span></div>
+        <br>
+        <div><span class="tc-purple">class</span> <span class="tc-blue">CipherEngine</span><span class="tc-dim">:</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tc-dim">"""Core encryption engine — v6.0 architecture.</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tc-dim">&nbsp;&nbsp;&nbsp;Key insight: security integrity requires key scheduling,</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tc-dim">&nbsp;&nbsp;&nbsp;not raw XOR. This is the v6 architectural advance.</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tc-dim">&nbsp;&nbsp;&nbsp;"""</span></div>
+        <br>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tc-gold">def</span> <span class="tc-green">__init__</span><span class="tc-dim">(</span><span class="tc-cyan">self</span><span class="tc-dim">, master_key:</span> <span class="tc-blue">bytes</span><span class="tc-dim">):</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tc-cyan">self</span><span class="tc-dim">.</span><span class="tc-cyan">_key</span> <span class="tc-dim">=</span> <span class="tc-cyan">self</span><span class="tc-dim">.</span><span class="tc-green">_derive_key</span><span class="tc-dim">(master_key)</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tc-cyan">self</span><span class="tc-dim">.</span><span class="tc-cyan">_version</span> <span class="tc-dim">=</span> <span class="tc-gold">"6.0"</span></div>
+        <br>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tc-gold">def</span> <span class="tc-green">_derive_key</span><span class="tc-dim">(</span><span class="tc-cyan">self</span><span class="tc-dim">, raw:</span> <span class="tc-blue">bytes</span><span class="tc-dim">) -></span> <span class="tc-blue">bytes</span><span class="tc-dim">:</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tc-gold">return</span> <span class="tc-cyan">hashlib</span><span class="tc-dim">.</span><span class="tc-cyan">sha256</span><span class="tc-dim">(raw).</span><span class="tc-cyan">digest</span><span class="tc-dim">()</span></div>
+        <br>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tc-gold">def</span> <span class="tc-green">encrypt</span><span class="tc-dim">(</span><span class="tc-cyan">self</span><span class="tc-dim">, plaintext:</span> <span class="tc-blue">str</span><span class="tc-dim">) -> </span><span class="tc-blue">Tuple</span><span class="tc-dim">[</span><span class="tc-blue">bytes</span><span class="tc-dim">,</span> <span class="tc-blue">str</span><span class="tc-dim">]:</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tc-cyan">nonce</span> <span class="tc-dim">=</span> <span class="tc-cyan">secrets</span><span class="tc-dim">.</span><span class="tc-cyan">token_bytes</span><span class="tc-dim">(16)</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tc-cyan">data</span> <span class="tc-dim">=</span> <span class="tc-cyan">plaintext</span><span class="tc-dim">.</span><span class="tc-cyan">encode</span><span class="tc-dim">(</span><span class="tc-gold">'utf-8'</span><span class="tc-dim">)</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tc-cyan">key_stream</span> <span class="tc-dim">= </span><span class="tc-cyan">self</span><span class="tc-dim">.</span><span class="tc-green">_key_schedule</span><span class="tc-dim">(nonce,</span> <span class="tc-cyan">len</span><span class="tc-dim">(data))</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tc-cyan">cipher</span> <span class="tc-dim">=</span> <span class="tc-blue">bytes</span><span class="tc-dim">([b ^ k </span><span class="tc-gold">for</span><span class="tc-dim"> b, k </span><span class="tc-gold">in</span> <span class="tc-cyan">zip</span><span class="tc-dim">(data, key_stream)])</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tc-cyan">checksum</span> <span class="tc-dim">=</span> <span class="tc-cyan">hashlib</span><span class="tc-dim">.</span><span class="tc-cyan">sha256</span><span class="tc-dim">(nonce + cipher).</span><span class="tc-cyan">hexdigest</span><span class="tc-dim">()</span></div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tc-gold">return</span> <span class="tc-dim">nonce + cipher, checksum</span></div>
+        <br>
+        <div><span class="tc-dim"># ─── STATUS ──────────────────────────────────────────</span></div>
+        <div><span class="tc-green">>>> </span><span class="tc-cyan">engine</span> <span class="tc-dim">=</span> <span class="tc-blue">CipherEngine</span><span class="tc-dim">(</span><span class="tc-gold">b"sovereign_key_MN_2025"</span><span class="tc-dim">)</span></div>
+        <div><span class="tc-green">>>> </span><span class="tc-cyan">ct, chk</span> <span class="tc-dim">= engine.</span><span class="tc-green">encrypt</span><span class="tc-dim">(</span><span class="tc-gold">"Mongolia's digital sovereignty begins here."</span><span class="tc-dim">)</span></div>
+        <div><span class="tc-green">>>> </span><span class="tc-cyan">print</span><span class="tc-dim">(</span><span class="tc-gold">f"Secured. Checksum: {chk[:32]}..."</span><span class="tc-dim">)</span></div>
+        <div><span class="tc-cyan">Secured. Checksum: a7f3e2c1d9b8...</span> &nbsp;<span class="tc-dim">✓</span> <span class="term-cursor"></span></div>
+      </div>
+    </div>
+
+    <div class="protocol-features">
+      <div class="proto-feat" data-reveal>
+        <p class="proto-feat-num">01.</p>
+        <h4 class="proto-feat-title">Symmetric XOR Architecture</h4>
+        <p class="proto-feat-body">The foundational cipher — elegant in its mathematics, powerful in its performance. v6.0 advances the raw XOR approach with a key scheduling system that eliminates the cyclical repetition vulnerabilities present in naive implementations.</p>
+      </div>
+      <div class="proto-feat" data-reveal>
+        <p class="proto-feat-num">02.</p>
+        <h4 class="proto-feat-title">Nonce-Based Integrity</h4>
+        <p class="proto-feat-body">Every encrypted payload in v6.0 is bound to a cryptographically random nonce and accompanied by a SHA-256 checksum. The receiver can verify, with mathematical certainty, that no byte was altered in transmission.</p>
+      </div>
+      <div class="proto-feat" data-reveal>
+        <p class="proto-feat-num">03.</p>
+        <h4 class="proto-feat-title">Sovereign by Design</h4>
+        <p class="proto-feat-body">CipherStream is built without dependencies on foreign key infrastructure. The encryption lives entirely within the user's control. In a governance context, this means no third party — including the platform's author — can access the communication.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ V. VISION 2040 ═══════ -->
+<section id="vision">
+  <div class="vision-diagonal"></div>
+  <div class="vision-inner">
+    <div style="text-align:center;margin-bottom:6rem;">
+      <p class="section-label" style="color:var(--gold);display:inline-block;">V &nbsp;—&nbsp; Vision 2040</p>
+      <h2 class="section-heading" style="color:var(--pearl);margin-top:1rem;">
+        Mongolia,<br>Reimagined.
+      </h2>
+    </div>
+
+    <div class="vision-top">
+      <p class="vision-manifesto" data-reveal>
+        "A country defined by <strong>transparency</strong>, protected by <strong>encryption</strong>, and led by <strong>integrity</strong> — where every institution is accountable to a public that possesses the technical means to hold it so."
+      </p>
+      <div class="vision-pillars">
+        <div class="vision-pillar" data-reveal>
+          <span class="pillar-num">I.</span>
+          <div class="pillar-content">
+            <p class="pillar-title">Digital Sovereignty</p>
+            <p class="pillar-desc">Every Mongolian citizen's data belongs to that citizen. Encryption is a civic right — and its architecture will be open, auditable, and independent of any foreign infrastructure.</p>
+          </div>
+        </div>
+        <div class="vision-pillar" data-reveal>
+          <span class="pillar-num">II.</span>
+          <div class="pillar-content">
+            <p class="pillar-title">Institutional Transparency</p>
+            <p class="pillar-desc">No procurement process, no governmental budget, no official decision should be invisible to the public it affects. The tools of information security — audit trails, cryptographic proofs — become the tools of accountability.</p>
+          </div>
+        </div>
+        <div class="vision-pillar" data-reveal>
+          <span class="pillar-num">III.</span>
+          <div class="pillar-content">
+            <p class="pillar-title">The Integrity Standard</p>
+            <p class="pillar-desc">Leadership is not proximity to power. It is alignment between stated values and documented behavior — measured over time, in public, against a standard that does not shift under political pressure.</p>
+          </div>
+        </div>
+        <div class="vision-pillar" data-reveal>
+          <span class="pillar-num">IV.</span>
+          <div class="pillar-content">
+            <p class="pillar-title">Technical Education as Infrastructure</p>
+            <p class="pillar-desc">A generation that understands cryptography, network security, and information systems is a generation that cannot be easily deceived by the institutions that govern them. This is the long investment.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Roadmap timeline -->
+    <div class="vision-timeline">
+      <p class="timeline-heading">The Roadmap &nbsp;·&nbsp; 2025 — 2040</p>
+      <div class="timeline-row">
+        <div class="timeline-node" data-reveal>
+          <div class="node-dot"></div>
+          <div class="node-year">2025</div>
+          <div class="node-title">Foundation</div>
+          <div class="node-desc">Military oath. CipherStream v6.0. The technical and ethical groundwork is laid.</div>
+        </div>
+        <div class="timeline-node" data-reveal>
+          <div class="node-dot"></div>
+          <div class="node-year">2026</div>
+          <div class="node-title">International Study</div>
+          <div class="node-desc">Graduate studies in information security and governance — building the global network a reform agenda requires.</div>
+        </div>
+        <div class="timeline-node" data-reveal>
+          <div class="node-dot"></div>
+          <div class="node-year">2028</div>
+          <div class="node-title">Institutional Entry</div>
+          <div class="node-desc">Entry into Mongolia's technical governance infrastructure. Digital policy, cybersecurity frameworks, civic tech.</div>
+        </div>
+        <div class="timeline-node" data-reveal>
+          <div class="node-dot"></div>
+          <div class="node-year">2033</div>
+          <div class="node-title">Policy Architecture</div>
+          <div class="node-desc">First comprehensive digital sovereignty framework. Encryption as constitutional right. Open-source government audit systems.</div>
+        </div>
+        <div class="timeline-node" data-reveal>
+          <div class="node-dot"></div>
+          <div class="node-year">2040</div>
+          <div class="node-title">Mongolia Transformed</div>
+          <div class="node-desc">A state that leads the developing world in institutional transparency, digital rights, and accountable governance.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="vision-cta">
+      <p class="cta-phrase">The work begins now.</p>
+      <div>
+        <a href="mailto:temuulen@example.mn" class="btn-gold">Open a Channel</a>
+        <a href="#story" class="btn-ghost">Read the Story</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer>
+  <div class="footer-mono">T. Tuvshinbold</div>
+  <div class="footer-tagline">"The steppe is patient. So is good work."</div>
+  <div class="footer-copy">© 2025 &nbsp;·&nbsp; Mongolia</div>
+</footer>
+
+<script>
+/* ─── NAV SCROLL ─── */
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+/* ─── SCROLL REVEAL ─── */
+const revealEls = document.querySelectorAll('[data-reveal]');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (!entry.isIntersecting) return;
+    const siblings = Array.from(entry.target.parentElement.children).filter(c => c.hasAttribute('data-reveal'));
+    const idx = siblings.indexOf(entry.target);
+    setTimeout(() => entry.target.classList.add('visible'), idx * 110);
+    io.unobserve(entry.target);
+  });
+}, { threshold: 0.12 });
+revealEls.forEach(el => io.observe(el));
+
+/* Story chapters get their own observer */
+document.querySelectorAll('.story-chapter').forEach((el, i) => {
+  const chObs = new IntersectionObserver(([entry]) => {
+    if (entry.isIntersecting) { setTimeout(() => el.classList.add('visible'), i * 80); chObs.disconnect(); }
+  }, { threshold: 0.15 });
+  chObs.observe(el);
+});
+</script>
+</body>
+</html>
